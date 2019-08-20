@@ -4,10 +4,9 @@ Hunga-Bunga
 ============
 
 A Package to brute force all scikit-learn models with all of sklearn parameters!
-scikit-learn is a Python module for machine learning built on top of SciPy and is distributed under the 3-Clause BSD license.
 
-##### HungaBunga: A Package to brute force all sklearn models with all of sklearn parameters!
-##### Ahhh Hunga Bunga!
+
+##### Lets brute force all sklearn models with all of sklearn parameters!  Ahhh Hunga Bunga!!
 
 <p align="center">
   <img src="https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true" width="400">
