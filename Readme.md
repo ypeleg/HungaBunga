@@ -1,8 +1,13 @@
 
 
+Hunga-Bunga
+============
 
-## HungaBunga: A Package to brute force all sklearn models with all of sklearn parameters!
-### Ahhh Hunga Bunga!
+A Package to brute force all scikit-learn models with all of sklearn parameters!
+scikit-learn is a Python module for machine learning built on top of SciPy and is distributed under the 3-Clause BSD license.
+
+##### HungaBunga: A Package to brute force all sklearn models with all of sklearn parameters!
+##### Ahhh Hunga Bunga!
 
 ![hungabunga](https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true)
 
@@ -36,24 +41,42 @@ Runs **all the model** available on `sklearn` for supervised learning [here](htt
 
 Note: Some models were dropped out (nearly none of them..) and some crash or cause exceptions from time to time. It takes REALLY long to test this out so clearing exceptions took me a while.
 
-# USAGE
 
-### How to run
+Dependencies
+~~~~~~~~~~~~
 
-#### Option I: brain = True
+- Python (>= 2.7)
+- NumPy (>= 1.11.0)
+- SciPy (>= 0.17.0)
+- joblib (>= 0.11)
+- scikit-learn (>=0.20.0)
 
+
+Usage
+~~~~~~~~~~~~
+
+### Import from:
+```
 from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
+```
 
+Option I (Recommended): brain = False
+~~~~~~~~~~~~
+
+```
 clf = HungaBungaClassifier()
 clf.fit(x, y)
 clf.predict(x)
+```
 
 
-#### Option II: brain = True
+Option II: brain = False
+~~~~~~~~~~~~
 
-from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
+```
 clf = HungaBungaClassifier(brain=True)
 clf.fit(x, y)
+```
 
 
 The output looks this:
