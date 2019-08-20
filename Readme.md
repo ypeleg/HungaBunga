@@ -1,8 +1,8 @@
 
 
 
-# Hunga Bunga!! Brute Force all sklearn models with all of sklearn parameters!!
-
+# Brute Force all sklearn models with all of sklearn parameters!
+# Ahhh Hunga Bunga!
 
 ### What?
 Yes.
