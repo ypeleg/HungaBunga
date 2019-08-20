@@ -10,10 +10,8 @@ scikit-learn is a Python module for machine learning built on top of SciPy and i
 ##### Ahhh Hunga Bunga!
 
 
-<img src="https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true" width="200">
+<img src="https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true" width="400", align="center">
 
-
-![hungabunga](https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true)
 
 
 
