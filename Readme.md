@@ -26,10 +26,10 @@ Many believe that
 
 So here is an automation for that.
 
-# HOW IT WORKS
+## HOW IT WORKS
 Runs through all `sklearn` models (both classification and regression), with **all possible hyperparameters**, and rank using cross-validation.
 
-# MODELS
+## MODELS
 Runs **all the model** available on `sklearn` for supervised learning [here](http://scikit-learn.org/stable/supervised_learning.html). The categories are:
 
 * Generalized Linear Models
@@ -58,8 +58,8 @@ Dependencies
 
 
 
-Option I (Recommended): brain = False
-=================
+## Option I (Recommended): brain = False
+
 
 As any other sklearn model 
 
@@ -72,8 +72,8 @@ And import from here
     from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
 
 
-Option II: brain = True
-=================
+## Option II: brain = True
+
 
 As any other sklearn model 
 
