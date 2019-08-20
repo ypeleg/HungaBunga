@@ -3,7 +3,7 @@
 Hunga-Bunga
 ============
 
-Brute Force ALL scikit-learn models and all scikit-learn parameters with **fit** **predict**.
+Brute Force all scikit-learn models and all scikit-learn parameters with **fit** **predict**.
 
 
 
