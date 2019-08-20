@@ -9,7 +9,7 @@ scikit-learn is a Python module for machine learning built on top of SciPy and i
 ##### HungaBunga: A Package to brute force all sklearn models with all of sklearn parameters!
 ##### Ahhh Hunga Bunga!
 
-![hungabunga](https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true =250x)
+![hungabunga](https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true)
 
 
 
