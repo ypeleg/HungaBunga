@@ -9,7 +9,7 @@ scikit-learn is a Python module for machine learning built on top of SciPy and i
 ##### HungaBunga: A Package to brute force all sklearn models with all of sklearn parameters!
 ##### Ahhh Hunga Bunga!
 
-![hungabunga](https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true)
+![hungabunga](https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true =250x)
 
 
 
@@ -58,13 +58,13 @@ Dependencies
 Option I (Recommended): brain = False
 =================
 
-As any other sklearn model ::
+As any other sklearn model 
 
     clf = HungaBungaClassifier()
     clf.fit(x, y)
     clf.predict(x)
 
-And import from here::
+And import from here
 
     from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
 
@@ -72,7 +72,7 @@ And import from here::
 Option II: brain = True
 =================
 
-As any other sklearn model ::
+As any other sklearn model 
 
     clf = HungaBungaClassifier(brain=True)
     clf.fit(x, y)
