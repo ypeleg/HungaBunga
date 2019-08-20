@@ -6,7 +6,7 @@ Hunga-Bunga
 A Package to brute force all scikit-learn models with all of sklearn parameters!
 
 
-#### Usage
+
 -----
 ##### Lets brute force all sklearn models with all of sklearn parameters!  Ahhh Hunga Bunga!!
 
