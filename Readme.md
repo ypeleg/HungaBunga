@@ -1,13 +1,13 @@
 
 
 
-# Brute Force all sklearn models with all of sklearn parameters!
-# Ahhh Hunga Bunga!
+## HungaBunga: A Package to brute force all sklearn models with all of sklearn parameters!
+### Ahhh Hunga Bunga!
 
-### What?
+#### What?
 Yes.
 
-### No! Really! What?
+#### No! Really! What?
 Many believe that
 
 > most of the work of supervised (non-deep) Machine Learning lies in feature engineering, whereas the model-selection process is just running through all the models or just take xgboost.
