@@ -51,32 +51,31 @@ Dependencies
 - joblib (>= 0.11)
 - scikit-learn (>=0.20.0)
 
-
-Usage
 ~~~~~~~~~~~~
 
-### Import from:
-```
-from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
-```
+
 
 Option I (Recommended): brain = False
-~~~~~~~~~~~~
+=================
 
-```
-clf = HungaBungaClassifier()
-clf.fit(x, y)
-clf.predict(x)
-```
+As any other sklearn model ::
+
+    clf = HungaBungaClassifier()
+    clf.fit(x, y)
+    clf.predict(x)
+
+And import from here::
+
+    from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
 
 
-Option II: brain = False
-~~~~~~~~~~~~
+Option II: brain = True
+=================
 
-```
-clf = HungaBungaClassifier(brain=True)
-clf.fit(x, y)
-```
+As any other sklearn model ::
+
+    clf = HungaBungaClassifier(brain=True)
+    clf.fit(x, y)
 
 
 The output looks this:
