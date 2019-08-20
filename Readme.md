@@ -63,23 +63,27 @@ Dependencies
 
 As any other sklearn model 
 
-    clf = HungaBungaClassifier()
-    clf.fit(x, y)
-    clf.predict(x)
-
+```python
+clf = HungaBungaClassifier()
+clf.fit(x, y)
+clf.predict(x)
+```
+    
 And import from here
 
+```python
     from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
-
+```
 
 ## Option II: brain = True
 
 
 As any other sklearn model 
 
-    clf = HungaBungaClassifier(brain=True)
-    clf.fit(x, y)
-
+```
+clf = HungaBungaClassifier(brain=True)
+clf.fit(x, y)
+```
 
 The output looks this:
 
