@@ -4,7 +4,7 @@
 ## HungaBunga: A Package to brute force all sklearn models with all of sklearn parameters!
 ### Ahhh Hunga Bunga!
 
-![hungabunga](https://raw.githubusercontent.com/ypeleg/HungaBunga/master/hungabunga.png)
+![hungabunga](https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true)
 
 
 
