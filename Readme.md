@@ -3,7 +3,7 @@
 Hunga-Bunga
 ============
 
-A Package to brute force all scikit-learn models with all of sklearn parameters!
+Brute Force ALL scikit-learn models and all scikit-learn parameters with **fit** **predict**.
 
 
 
