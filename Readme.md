@@ -8,6 +8,10 @@ A Package to brute force all scikit-learn models with all of sklearn parameters!
 
 ##### Lets brute force all sklearn models with all of sklearn parameters!  Ahhh Hunga Bunga!!
 
+```python
+from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
+```
+
 <p align="center">
   <img src="https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true" width="400">
 </p>
@@ -72,7 +76,7 @@ clf.predict(x)
 And import from here
 
 ```python
-    from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
+from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
 ```
 
 ## Option II: brain = True
