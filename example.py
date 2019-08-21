@@ -37,7 +37,7 @@ print(mdl.predict(X_c))
 X, y = random.choice(((X_c, y_c), (X_r, y_r)))
 mdl = HungaBungaZeroKnowledge()
 mdl.fit(X, y)
-print(mdl.predict(X_c))
+print(mdl.predict(X))
 print(mdl.problem_type)
 
 #        <3 Dean, this is 4 U <3
