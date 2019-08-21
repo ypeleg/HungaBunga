@@ -31,15 +31,15 @@ linear_models_n_params = [
     (SGDClassifier,
      {'loss': ['hinge', 'log', 'modified_huber', 'squared_hinge'],
       'alpha': [0.0001, 0.001, 0.1],
-      'penalty_12none': penalty_12none
+      'penalty': penalty_12none
       }),
 
     (LogisticRegression,
-     {'penalty_12': penalty_12, 'max_iter': max_iter, 'tol': tol,  'warm_start': warm_start, 'C':C, 'solver': ['liblinear']
+     {'penalty': penalty_12, 'max_iter': max_iter, 'tol': tol,  'warm_start': warm_start, 'C':C, 'solver': ['liblinear']
       }),
 
     (Perceptron,
-     {'penalty_all': penalty_all, 'alpha': alpha, 'n_iter': n_iter, 'eta0': eta0, 'warm_start': warm_start
+     {'penalty': penalty_all, 'alpha': alpha, 'n_iter': n_iter, 'eta0': eta0, 'warm_start': warm_start
       }),
 
     (PassiveAggressiveClassifier,
@@ -73,7 +73,7 @@ svm_models_n_params_small = [
       }),
 
     (LinearSVC,
-     { 'C': C, 'penalty_12': penalty_12, 'tol': tol, 'max_iter': max_iter,
+     { 'C': C, 'penalty': penalty_12, 'tol': tol, 'max_iter': max_iter,
        'loss': ['hinge', 'squared_hinge'],
        })
 ]
@@ -176,7 +176,7 @@ tree_models_n_params_small = [
 
 def run_all_classifiers(x, y, small = True, normalize_x = True, n_jobs=cpu_count()-1, brain=False, test_size=0.2, n_splits=5, upsample=True, scoring=None, verbose=False):
     all_params = (linear_models_n_params_small if small else linear_models_n_params) +  (nn_models_n_params_small if small else nn_models_n_params) + ([] if small else gaussianprocess_models_n_params) + neighbor_models_n_params + (svm_models_n_params_small if small else svm_models_n_params) + (tree_models_n_params_small if small else tree_models_n_params)
-    return main_loop(all_params, StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=True, n_jobs=n_jobs, verbose=False, brain=brain)
+    return main_loop(all_params, StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=True, n_jobs=n_jobs, verbose=verbose, brain=brain, test_size=test_size, n_splits=n_splits, upsample=upsample, scoring=scoring)
 
 
 class HungaBungaClassifier(ClassifierMixin):
@@ -195,6 +195,7 @@ class HungaBungaClassifier(ClassifierMixin):
 
     def fit(self, x, y):
         self.model = run_all_classifiers(x, y, normalize_x=self.normalize_x, test_size=self.test_size, n_splits=self.n_splits, upsample=self.upsample, scoring=self.scoring, verbose=self.verbose, brain=self.brain, n_jobs=self.n_jobs)[0]
+        return self
 
     def predict(self, x):
         return self.model.predict(x)

@@ -24,10 +24,10 @@ from universal_params import *
 
 
 linear_models_n_params = [
-    (LinearRegression, normalize),
+    (LinearRegression, {'normalize': normalize}),
 
     (Ridge,
-     {'alpha': alpha, 'normaliz': normalize, 'tol': tol,
+     {'alpha': alpha, 'normalize': normalize, 'tol': tol,
       'solver': ['svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag']
       }),
 
@@ -107,7 +107,7 @@ linear_models_n_params = [
 ]
 
 linear_models_n_params_small = [
-    (LinearRegression, normalize),
+    (LinearRegression, {'normalize': normalize}),
 
     (Ridge,
      {'alpha': alpha_small, 'normalize': normalize
