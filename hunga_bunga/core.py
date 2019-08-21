@@ -1,4 +1,6 @@
 
+import warnings
+warnings.filterwarnings('ignore')
 
 import sklearn.model_selection
 import numpy as np
@@ -98,7 +100,7 @@ def main_loop(models_n_params, x, y, isClassification, test_size = 0.2, n_splits
             if brain: print(clf_Klass.__name__)
             if clf_Klass == KMeans: parameters['n_clusters'] = [len(np.unique(y))]
             elif clf_Klass in TREE_N_ENSEMBLE_MODELS: parameters['max_features'] = [v for v in parameters['max_features'] if v is None or type(v)==str or v<=num_features]
-            if gridsearch: clf_search = GridSearchCVProgressBar(clf_Klass(), parameters, scoring, cv=cv_(), n_jobs=n_jobs)
+            if grid_search: clf_search = GridSearchCVProgressBar(clf_Klass(), parameters, scoring, cv=cv_(), n_jobs=n_jobs)
             else: clf_search = RandomizedSearchCVProgressBar(clf_Klass(), parameters, scoring, cv=cv_(), n_jobs=n_jobs)
             clf_search.fit(x, y)
             timespent = timeit(clf_Klass, clf_search.best_params_, x, y)
