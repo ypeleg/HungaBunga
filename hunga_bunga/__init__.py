@@ -1,5 +1,6 @@
 
 
+from multiprocessing import cpu_count
 from sklearn.base import BaseEstimator
 from regression import HungaBungaRegressor
 from classification import HungaBungaClassifier
