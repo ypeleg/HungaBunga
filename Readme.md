@@ -61,6 +61,8 @@ Dependencies
 - SciPy (>= 0.17.0)
 - joblib (>= 0.11)
 - scikit-learn (>=0.20.0)
+- tabulate (>=0.8.2)
+- tqdm (>=4.28.1)
 
 ~~~~~~~~~~~~
 
