@@ -1,30 +1,16 @@
+
 import warnings
 warnings.filterwarnings('ignore')
 from multiprocessing import cpu_count
 
-# linear models: http://scikit-learn.org/stable/modules/linear_model.html#stochastic-gradient-descent-sgd
-from sklearn.linear_model import \
-    LinearRegression, Ridge, Lasso, ElasticNet, \
-    Lars, LassoLars, \
-    OrthogonalMatchingPursuit, \
-    BayesianRidge, ARDRegression, \
-    SGDRegressor, \
-    PassiveAggressiveRegressor, \
-    RANSACRegressor, HuberRegressor
-
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet, Lars, LassoLars, OrthogonalMatchingPursuit, BayesianRidge, ARDRegression, SGDRegressor, PassiveAggressiveRegressor, RANSACRegressor, HuberRegressor
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.preprocessing import StandardScaler
-
-# svm models: http://scikit-learn.org/stable/modules/svm.html
 from sklearn.svm import SVR, NuSVR, LinearSVR
-
-# neighbor models: http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.RadiusNeighborsRegressor.html#sklearn.neighbors.RadiusNeighborsRegressor
 from sklearn.neighbors import RadiusNeighborsRegressor, KNeighborsRegressor
-
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel, DotProduct, WhiteKernel
 from sklearn.neural_network import MLPRegressor
-
 from sklearn.ensemble import AdaBoostRegressor, ExtraTreesRegressor, RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.base import BaseEstimator
@@ -32,9 +18,9 @@ from sklearn.base import ClassifierMixin
 from sklearn.base import RegressorMixin
 from sklearn.base import is_classifier
 
+
 from utilities import *
 from universal_params import *
-
 
 
 linear_models_n_params = [
@@ -297,63 +283,40 @@ tree_models_n_params_small = [
       'criterion': ['mse', 'mae']})
 ]
 
-def run_linear_models(x, y, small = True, normalize_x = True):
-    return big_loop(linear_models_n_params_small if small else linear_models_n_params,
-                    StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False)
-
-def run_svm_models(x, y, small = True, normalize_x = True):
-    return big_loop(svm_models_n_params_small if small else svm_models_n_params,
-                    StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False)
-
-def run_neighbor_models(x, y, normalize_x = True):
-    return big_loop(neighbor_models_n_params,
-                    StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False)
-
-def run_gaussian_models(x, y, normalize_x = True):
-    return big_loop(gaussianprocess_models_n_params,
-                    StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False)
-
-def run_nn_models(x, y, small = True, normalize_x = True):
-    return big_loop(nn_models_n_params_small if small else nn_models_n_params,
-                    StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False)
-
-def run_tree_models(x, y, small = True, normalize_x = True):
-    return big_loop(tree_models_n_params_small if small else tree_models_n_params,
-                    StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False)
-
-def run_all(x, y, small = True, normalize_x = True, n_jobs=cpu_count()-1, brain=False):
-
-    all_params = (linear_models_n_params_small if small else linear_models_n_params) + \
-                 (nn_models_n_params_small if small else nn_models_n_params) + \
-                 ([] if small else gaussianprocess_models_n_params) + \
-                 neighbor_models_n_params + \
-                 (svm_models_n_params_small if small else svm_models_n_params) + \
-                 (tree_models_n_params_small if small else tree_models_n_params)
-
-    return big_loop(all_params,
-                    StandardScaler().fit_transform(x) if normalize_x else x, y,
-                    isClassification=False, n_jobs=n_jobs, brain=brain)
-
 
 def gen_reg_data(x_mu=10., x_sigma=1., num_samples=100, num_features=3, y_formula=sum, y_sigma=1.):
     x = np.random.normal(x_mu, x_sigma, (num_samples, num_features))
     y = np.apply_along_axis(y_formula, 1, x) + np.random.normal(0, y_sigma, (num_samples,))
     return x, y
 
+def run_all_regressors(x, y, small = True, normalize_x = True, n_jobs=cpu_count()-1, brain=False, test_size=0.2, n_splits=5, upsample=True, scoring=None, verbose=False):
+    all_params = (linear_models_n_params_small if small else linear_models_n_params) + (nn_models_n_params_small if small else nn_models_n_params) + ([] if small else gaussianprocess_models_n_params) + neighbor_models_n_params + (svm_models_n_params_small if small else svm_models_n_params) + (tree_models_n_params_small if small else tree_models_n_params)
+    return main_loop(all_params, StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False, n_jobs=n_jobs, brain=brain)
+
 
 class HungaBungaRegressor(RegressorMixin):
-    def __init__(self, brain=False):
+    def __init__(self, brain=False, test_size = 0.2, n_splits = 5, random_state=None, upsample=True, scoring=None, verbose=True, normalize_x = True, n_jobs =cpu_count() - 1):
         self.model = None
         self.brain = brain
+        self.test_size = test_size
+        self.n_splits = n_splits
+        self.random_state = random_state
+        self.upsample = upsample
+        self.scoring = None
+        self.verbose = verbose
+        self.n_jobs = n_jobs
+        self.normalize_x = normalize_x
+        super(HungaBungaRegressor, self).__init__()
+
     def fit(self, x, y):
-        self.model = run_all(x, y, normalize_x=True, brain=self.brain)[0]
+        self.model = run_all_regressors(x, y, normalize_x=self.normalize_x, test_size=self.test_size, n_splits=self.n_splits, upsample=self.upsample, scoring=self.scoring, verbose=self.verbose, brain=self.brain, n_jobs=self.n_jobs)[0]
+
     def predict(self, x):
         return self.model.predict(x)
 
 
 if __name__ == '__main__':
     x, y = gen_reg_data(10, 3, 100, 3, sum, 0.3)
-    # print run_all(x, y, small=True, normalize_x=True)
-    a = HungaBungaRegressor()
-    a.fit(x, y)
-    a.predict(x)
+    mdl = HungaBungaRegressor()
+    mdl.fit(x, y)
+    print(mdl.predict(x).shape)
