@@ -180,7 +180,7 @@ def run_all_classifiers(x, y, small = True, normalize_x = True, n_jobs=cpu_count
 
 
 class HungaBungaClassifier(ClassifierMixin):
-    def __init__(self, brain=False, test_size = 0.2, n_splits = 5, random_state=None, upsample=True, scoring=None, verbose=True, normalize_x = True, n_jobs =cpu_count() - 1):
+    def __init__(self, brain=False, test_size = 0.2, n_splits = 5, random_state=None, upsample=True, scoring=None, verbose=False, normalize_x = True, n_jobs =cpu_count() - 1):
         self.model = None
         self.brain = brain
         self.test_size = test_size
