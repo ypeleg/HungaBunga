@@ -1,8 +1,11 @@
 
 
-from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
+import random
+
+from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor, HungaBungaZeroKnowledge
 from hunga_bunga.regression import gen_reg_data
 from sklearn import datasets
+
 
 
 # ---------- Getting The Data ----------
@@ -28,3 +31,13 @@ mdl.fit(X_c, y_r)
 print(mdl.predict(X_c))
 
 
+
+# ---------- Zero Knowledge ----------
+
+X, y = random.choice(((X_c, y_c), (X_r, y_r)))
+mdl = HungaBungaZeroKnowledge()
+mdl.fit(X, y)
+print(mdl.predict(X_c))
+print(mdl.problem_type)
+
+#        <3 Dean, this is 4 U <3
