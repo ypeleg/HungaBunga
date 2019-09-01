@@ -52,6 +52,11 @@ Runs **all the model** available on `sklearn` for supervised learning [here](htt
 
 Note: Some models were dropped out (nearly none of them..) and some crash or cause exceptions from time to time. It takes REALLY long to test this out so clearing exceptions took me a while.
 
+## Installation 
+
+```python
+pip install hunga-bunga
+```
 
 Dependencies
 ~~~~~~~~~~~~
