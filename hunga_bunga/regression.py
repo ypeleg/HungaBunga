@@ -1,22 +1,24 @@
 
+import random
 import warnings
 warnings.filterwarnings('ignore')
 from multiprocessing import cpu_count
 
-from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet, Lars, LassoLars, OrthogonalMatchingPursuit, BayesianRidge, ARDRegression, SGDRegressor, PassiveAggressiveRegressor, RANSACRegressor, HuberRegressor
-from sklearn.kernel_ridge import KernelRidge
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVR, NuSVR, LinearSVR
-from sklearn.neighbors import RadiusNeighborsRegressor, KNeighborsRegressor
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, ConstantKernel, DotProduct, WhiteKernel
-from sklearn.neural_network import MLPRegressor
-from sklearn.ensemble import AdaBoostRegressor, ExtraTreesRegressor, RandomForestRegressor
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.base import BaseEstimator
-from sklearn.base import ClassifierMixin
-from sklearn.base import RegressorMixin
 from sklearn.base import is_classifier
+from sklearn.base import RegressorMixin
+from sklearn.base import ClassifierMixin
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.svm import SVR, NuSVR, LinearSVR
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import ParameterSampler
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.neighbors import RadiusNeighborsRegressor, KNeighborsRegressor
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel, DotProduct, WhiteKernel
+from sklearn.ensemble import AdaBoostRegressor, ExtraTreesRegressor, RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet, Lars, LassoLars, OrthogonalMatchingPursuit, BayesianRidge, ARDRegression, SGDRegressor, PassiveAggressiveRegressor, RANSACRegressor, HuberRegressor
 
 
 from core import *
@@ -294,6 +296,12 @@ def run_all_regressors(x, y, small = True, normalize_x = True, n_jobs=cpu_count(
     return main_loop(all_params, StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=False, n_jobs=n_jobs, brain=brain, test_size=test_size, n_splits=n_splits, upsample=upsample, scoring=scoring, verbose=verbose, grid_search=grid_search)
 
 
+def run_one_regressor(x, y, small = True, normalize_x = True, n_jobs=cpu_count()-1, brain=False, test_size=0.2, n_splits=5, upsample=True, scoring=None, verbose=False, grid_search=True):
+    all_params = (linear_models_n_params_small if small else linear_models_n_params) + (nn_models_n_params_small if small else nn_models_n_params) + ([] if small else gaussianprocess_models_n_params) + neighbor_models_n_params + (svm_models_n_params_small if small else svm_models_n_params) + (tree_models_n_params_small if small else tree_models_n_params)
+    all_params = random.choice(all_params)
+    return all_params[0](**(list(ParameterSampler(all_params[1], n_iter=1))[0]))
+
+
 class HungaBungaRegressor(RegressorMixin):
     def __init__(self, brain=False, test_size = 0.2, n_splits = 5, random_state=None, upsample=True, scoring=None, verbose=False, normalize_x = True, n_jobs =cpu_count() - 1, grid_search=True):
         self.model = None
@@ -311,6 +319,30 @@ class HungaBungaRegressor(RegressorMixin):
 
     def fit(self, x, y):
         self.model = run_all_regressors(x, y, normalize_x=self.normalize_x, test_size=self.test_size, n_splits=self.n_splits, upsample=self.upsample, scoring=self.scoring, verbose=self.verbose, brain=self.brain, n_jobs=self.n_jobs, grid_search=self.grid_search)[0]
+        return self
+
+    def predict(self, x):
+        return self.model.predict(x)
+
+
+class HungaBungaRandomRegressor(RegressorMixin):
+    def __init__(self, brain=False, test_size = 0.2, n_splits = 5, random_state=None, upsample=True, scoring=None, verbose=False, normalize_x = True, n_jobs =cpu_count() - 1, grid_search=True):
+        self.model = None
+        self.brain = brain
+        self.test_size = test_size
+        self.n_splits = n_splits
+        self.random_state = random_state
+        self.upsample = upsample
+        self.scoring = None
+        self.verbose = verbose
+        self.n_jobs = n_jobs
+        self.normalize_x = normalize_x
+        self.grid_search=grid_search
+        super(HungaBungaRandomRegressor, self).__init__()
+
+    def fit(self, x, y):
+        self.model = run_one_regressor(x, y, normalize_x=self.normalize_x, test_size=self.test_size, n_splits=self.n_splits, upsample=self.upsample, scoring=self.scoring, verbose=self.verbose, brain=self.brain, n_jobs=self.n_jobs, grid_search=self.grid_search)
+        self.model.fit(x, y)
         return self
 
     def predict(self, x):

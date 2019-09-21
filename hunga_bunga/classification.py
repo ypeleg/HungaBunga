@@ -1,4 +1,5 @@
 
+import random
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -15,6 +16,7 @@ from sklearn.gaussian_process.kernels import RBF, ConstantKernel, DotProduct, Ma
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import ParameterSampler
 
 from sklearn.ensemble import AdaBoostRegressor, ExtraTreesRegressor, RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
@@ -178,6 +180,11 @@ def run_all_classifiers(x, y, small = True, normalize_x = True, n_jobs=cpu_count
     all_params = (linear_models_n_params_small if small else linear_models_n_params) +  (nn_models_n_params_small if small else nn_models_n_params) + ([] if small else gaussianprocess_models_n_params) + neighbor_models_n_params + (svm_models_n_params_small if small else svm_models_n_params) + (tree_models_n_params_small if small else tree_models_n_params)
     return main_loop(all_params, StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=True, n_jobs=n_jobs, verbose=verbose, brain=brain, test_size=test_size, n_splits=n_splits, upsample=upsample, scoring=scoring, grid_search=grid_search)
 
+def run_one_classifier(x, y, small = True, normalize_x = True, n_jobs=cpu_count()-1, brain=False, test_size=0.2, n_splits=5, upsample=True, scoring=None, verbose=False, grid_search=True):
+    all_params = (linear_models_n_params_small if small else linear_models_n_params) +  (nn_models_n_params_small if small else nn_models_n_params) + ([] if small else gaussianprocess_models_n_params) + neighbor_models_n_params + (svm_models_n_params_small if small else svm_models_n_params) + (tree_models_n_params_small if small else tree_models_n_params)
+    all_params = random.choice(all_params)
+    return all_params[0](**(list(ParameterSampler(all_params[1], n_iter=1))[0]))
+
 
 class HungaBungaClassifier(ClassifierMixin):
     def __init__(self, brain=False, test_size = 0.2, n_splits = 5, random_state=None, upsample=True, scoring=None, verbose=False, normalize_x = True, n_jobs =cpu_count() - 1, grid_search=True):
@@ -196,6 +203,30 @@ class HungaBungaClassifier(ClassifierMixin):
 
     def fit(self, x, y):
         self.model = run_all_classifiers(x, y, normalize_x=self.normalize_x, test_size=self.test_size, n_splits=self.n_splits, upsample=self.upsample, scoring=self.scoring, verbose=self.verbose, brain=self.brain, n_jobs=self.n_jobs, grid_search=self.grid_search)[0]
+        return self
+
+    def predict(self, x):
+        return self.model.predict(x)
+
+
+class HungaBungaRandomClassifier(ClassifierMixin):
+    def __init__(self, brain=False, test_size = 0.2, n_splits = 5, random_state=None, upsample=True, scoring=None, verbose=False, normalize_x = True, n_jobs =cpu_count() - 1, grid_search=True):
+        self.model = None
+        self.brain = brain
+        self.test_size = test_size
+        self.n_splits = n_splits
+        self.random_state = random_state
+        self.upsample = upsample
+        self.scoring = None
+        self.verbose = verbose
+        self.n_jobs = n_jobs
+        self.normalize_x = normalize_x
+        self.grid_search = grid_search
+        super(HungaBungaRandomClassifier, self).__init__()
+
+    def fit(self, x, y):
+        self.model = run_one_classifier(x, y, normalize_x=self.normalize_x, test_size=self.test_size, n_splits=self.n_splits, upsample=self.upsample, scoring=self.scoring, verbose=self.verbose, brain=self.brain, n_jobs=self.n_jobs, grid_search=self.grid_search)
+        self.model.fit(x, y)
         return self
 
     def predict(self, x):
