@@ -217,7 +217,7 @@ class HungaBungaRandomClassifier(ClassifierMixin):
         self.n_splits = n_splits
         self.random_state = random_state
         self.upsample = upsample
-        self.scoring = None
+        self.scoring = scoring
         self.verbose = verbose
         self.n_jobs = n_jobs
         self.normalize_x = normalize_x
