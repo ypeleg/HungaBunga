@@ -24,9 +24,10 @@ from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import RegressorMixin
 from sklearn.base import is_classifier
+from sklearn.ensemble import GradientBoostingClassifier
 
-from core import *
-from params import *
+from hunga_bunga.core import *
+from hunga_bunga.params import *
 
 
 linear_models_n_params = [
@@ -157,7 +158,11 @@ tree_models_n_params = [
     (ExtraTreesClassifier,
      {'n_estimators': n_estimators, 'max_features': max_features, 'max_depth': max_depth,
       'min_samples_split': min_samples_split, 'min_samples_leaf': min_samples_leaf, 'min_impurity_split': min_impurity_split, 'warm_start': warm_start,
-      'criterion': ['gini', 'entropy']})
+      'criterion': ['gini', 'entropy']}),
+      
+    (GradientBoostingClassifier,
+     {'n_estimators': n_estimators, 'max_features': max_features, 'max_depth': max_depth, 'min_samples_split': min_samples_split,
+      'min_samples_leaf': min_samples_leaf, 'min_impurity_split': min_impurity_split, 'warm_start': warm_start})
 ]
 
 tree_models_n_params_small = [
@@ -171,6 +176,10 @@ tree_models_n_params_small = [
       }),
 
     (ExtraTreesClassifier,
+     {'n_estimators_small': n_estimators_small, 'max_features_small': max_features_small, 'max_depth_small': max_depth_small,
+      'min_samples_split': min_samples_split, 'min_samples_leaf': min_samples_leaf}),
+      
+    (GradientBoostingClassifier,
      {'n_estimators_small': n_estimators_small, 'max_features_small': max_features_small, 'max_depth_small': max_depth_small,
       'min_samples_split': min_samples_split, 'min_samples_leaf': min_samples_leaf})
 ]

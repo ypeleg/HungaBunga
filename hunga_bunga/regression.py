@@ -19,10 +19,10 @@ from sklearn.neighbors import RadiusNeighborsRegressor, KNeighborsRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel, DotProduct, WhiteKernel
 from sklearn.ensemble import AdaBoostRegressor, ExtraTreesRegressor, RandomForestRegressor
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet, Lars, LassoLars, OrthogonalMatchingPursuit, BayesianRidge, ARDRegression, SGDRegressor, PassiveAggressiveRegressor, RANSACRegressor, HuberRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 
-
-from core import *
-from params import *
+from hunga_bunga.core import *
+from hunga_bunga.params import *
 
 
 linear_models_n_params = [
@@ -271,6 +271,10 @@ tree_models_n_params = [
      {'n_estimators': n_estimators, 'max_features': max_features, 'max_depth': max_depth, 'min_samples_split': min_samples_split,
       'min_samples_leaf': min_samples_leaf, 'min_impurity_split': min_impurity_split, 'warm_start': warm_start,
       'criterion': ['mse', 'mae']}),
+      
+    (GradientBoostingRegressor,
+     {'n_estimators': n_estimators, 'max_features': max_features, 'max_depth': max_depth, 'min_samples_split': min_samples_split,
+      'min_samples_leaf': min_samples_leaf, 'min_impurity_split': min_impurity_split, 'warm_start': warm_start}),
 
 ]
 
@@ -282,7 +286,11 @@ tree_models_n_params_small = [
     (ExtraTreesRegressor,
      {'n_estimators': n_estimators_small, 'max_features': max_features_small, 'max_depth': max_depth_small, 'min_samples_split': min_samples_split,
       'min_samples_leaf': min_samples_leaf,
-      'criterion': ['mse', 'mae']})
+      'criterion': ['mse', 'mae']}),
+      
+    (GradientBoostingRegressor,
+     {'n_estimators': n_estimators_small, 'max_features': max_features_small, 'max_depth': max_depth_small, 'min_samples_split': min_samples_split,
+      'min_samples_leaf': min_samples_leaf})
 ]
 
 
